@@ -25,7 +25,7 @@ console.log(name);
 name = 'David';
 console.log(name);
 
-//const stands for constant, cannot reassing and leaving unassigned
+//const stands for constant, cannot reasing and leaving unassigned
 const name = 'Andre'
 console.log(name);
 
