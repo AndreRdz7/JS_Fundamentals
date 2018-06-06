@@ -16,8 +16,9 @@ html = '<ul>' +
         '<li>City: ' + city + '</li>' +
         '</ul>';
 
-
-//with template strings (es6)
+//this creates a dotted list in html
+//with template literals/strings (es6)
+//use ` instead of " or ', using it as variables with $
 html = `
     <ul>
         <li>Name: ${name}</li>
