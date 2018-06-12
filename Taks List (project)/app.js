@@ -4,7 +4,8 @@ const form = document.querySelector('#task-form');
 const taskList = document.querySelector('.collection');
 const clearBtn = document.querySelector('.clear-tasks');
 const filter = document.querySelector('#filter');
-const taskInput = document.querySelector('#task')
+const taskInput = document.querySelector('#task');
+const heading = document.querySelector('h5');
 
 //load all event listeners
 loadEventListeners();
@@ -12,6 +13,8 @@ loadEventListeners();
 function loadEventListeners(){
     //load DOM event
     document.addEventListener('DOMContentLoaded',getTasks);
+    //colorify
+    document.addEventListener('mousemove',colorify);
     //add task event
     form.addEventListener('submit',addTask);
     //event delegation for multiple deleting
@@ -142,4 +145,11 @@ function filterTasks(e){
             task.style.display = 'none';
         }
     });
+}
+
+function colorify(e){
+    val = (e.offsetY + e.offsetX) % 7;
+    document.body.style.backgroundColor = `rgb(${e.offsetX},${e.offsetY},${val})`;
+    let val2 = (e.offsetY * e.offsetX) % 13;
+    document.activeElement.style.backgroundColor = `rgb(${e.offsetY},${e.offsetX},${val2})`;
 }
