@@ -10,8 +10,8 @@ Game function
 //game values
 let min = 1, 
     max = 10,
-    winnigNum = 2, //will be random,
-    gussesLeft = 3;
+    winningNum = 2, //will be random,
+    guessesLeft = 3;
 
 //UI elements
 const game = document.querySelector('#game'),
@@ -34,18 +34,33 @@ guessBtn.addEventListener('click',function(){
     }
     //check if won
     if(guess === winnigNum){
-        //disable input
-        guessInput.disabled = true;
-        //change border
-        guessInput.style.borderColor = 'green';
-        //set message
-        setMessage(`${winnigNum} is correct, YOU WIN!`,'green');
+        gameOver(true, `${winningNum} is correct, YOU WIN!`);
     } else {
-
+        //wrong number
+        guessesLeft --;
+        //GO lost
+        if(guessesLeft === 0){
+            gameOver(false,`Game Over, you lost. The correct number was ${winningNum}`)
+        } else {
+            gameOver(false,`${guess} is not correct, ${guessesLeft} guesses left`);
+        }
     }
 });
 
 function setMessage(msg, color){
     message.style.color = color;
     message.textContent = msg;
+}
+
+function gameOver(won,msg){
+    let color;
+    won === true ? color = 'green' : color = 'red';
+    //disable input
+    guessInput.disabled = true;
+    //change border
+    guessInput.style.borderColor = color;
+    //set text color
+    message.style.color = color;
+    //set message
+    setMessage(msg);
 }
