@@ -15,6 +15,7 @@ http.get('https://jsonplaceholder.typicode.com/posts',function(err,posts){
 */
 //post request
 //create data
+/* code works
 const data = {
     title: 'Custom post',
     body: 'hi'
@@ -24,6 +25,16 @@ http.post('https://jsonplaceholder.typicode.com/posts',data,function(err,post){
     if(err){
         console.log(err);
     } else {
-        console.log(post);
+        console.log(postS);
+    }
+});
+*/
+
+//update post (put)
+http.put('https://jsonplaceholder.typicode.com/posts/1',data,function(err,post){
+    if(err){
+        console.log(err);
+    } else {
+        console.log(postS);
     }
 });
