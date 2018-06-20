@@ -47,5 +47,4 @@ http.delete('https://jsonplaceholder.typicode.com/posts/1',function(err,response
     } else {
         console.log(response);
     }
-
 });
