@@ -1,41 +1,52 @@
-//ES6 promises
+document.getElementById('button1').addEventListener('click',getText);
+document.getElementById('button2').addEventListener('click',getJSON);
+document.getElementById('button3').addEventListener('click',getExternal);
 
-const posts = [
-    {
-       title: 'Post One',
-       body: 'This is post one' 
-    },
-    {
-        title: 'Post Two',
-        body: 'This is post two'
-    }
-];
 
-function createPost(post){
-    return new Promise(function(resolve,reject){
-        setTimeout(function(){
-            posts.push(post);
-            const error = false;
-            if(!error){
-                resolve();
-            } else {
-                reject('Error: Something went wrong');
-            }
-        },2000);
+//local .txt data
+function getText(){
+    fetch('test.txt').then(function(res){
+        return res.text();
+    }).then(function(data){
+        console.log(data);
+        document.getElementById('output').innerHTML = data;
+    }).catch(function(err){
+        console.log(err);
     });
 }
 
-function getPosts(){
-    setTimeout(function(){
+//local .json data
+function getJSON(){
+    fetch('posts.json').then(function(res){
+        return res.json();
+    }).then(function(data){
+        console.log(data);
         let output = '';
-        posts.forEach(function(post){
-            output += `<li>${post.title}<li>`
+        data.forEach(function(post){
+            output += `
+            <li>${post.title}: ${post.body}</li>
+            `
         });
-        document.body.innerHTML = output;
-    },1000)
+        document.getElementById('output').innerHTML = output;
+    }).catch(function(err){
+        console.log(err);
+    });
 }
 
-//promise = then, reject = catch
-createPost({title: 'Post Three',body: 'This is post three'}).then(getPosts).catch(function(err){
-    console.log(err);
-});
+//external API
+function getExternal(){
+    fetch('https://api.github.com/users').then(function(res){
+        return res.json();
+    }).then(function(data){
+        console.log(data);
+        let output = '';
+        data.forEach(function(user){
+            output += `
+            <li>${user.login}: ${user.url}</li>
+            `
+        });
+        document.getElementById('output').innerHTML = output;
+    }).catch(function(err){
+        console.log(err);
+    });
+}
