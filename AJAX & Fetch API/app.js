@@ -1,45 +1,41 @@
+const http = new EasyHTTP;
 
-const sayHello1 = function(){
-    console.log('Hello');
-}
-
-
-
-//to arrow
-const sayHello2 = () => {
-    console.log('Hello');
-}
-
-
-//super compact
-const sayHello = () => console.log('Hello');
-//return in one line
-const sayBye = () => 'Bye';
-
-//for object literals
-const sayHello3 = () => ({msg: 'Hello'});
-
-//with 1 parameter
-const sayHello4 = name => console.log(`Hello ${name}`);
-
-//with 2+ parameters
-const sayHello5 = (firstName,lastName) => console.log(`Hello ${firstName} ${lastName}`);
-
-//arrow functions as callbacks
+//get users 
+//no promise
 /*
-const users = ['Nathan','John','William'];
-const nameLenghts = users.map(function(name){
-    return name.length;
-});
+http.get('https://jsonplaceholder.typicode.com/users');
 */
-//to arrow
-const users = ['Nathan','John','William'];
-const nameLenghts = users.map(name => name.length); 
+//with promise
 
-console.log(nameLenghts);
+/*
+http.get('https://jsonplaceholder.typicode.com/users')
+.then(data => console.log(data))
+.catch(err => console.log(err));
+*/
 
-sayHello4('World');
-sayHello5('Andre','Rodriguez');
-sayHello1();
-console.log(sayHello3());
-console.log(sayBye());
+//user data
+const data = {
+    name: 'John',
+    username: 'SuperJ',
+    email: 'hey@meh.com'
+}
+//create post
+/*
+http.post('https://jsonplaceholder.typicode.com/users', data)
+.then(data => console.log(data))
+.catch(err => console.log(err));
+*/
+
+//update post
+http.put('https://jsonplaceholder.typicode.com/users/1', data)
+.then(data => console.log(data))
+.catch(err => console.log(err));
+
+//delete post
+http.delete('https://jsonplaceholder.typicode.com/users/2')
+.then(data => console.log(data))
+.catch(err => console.log(err));
+
+http.get('https://jsonplaceholder.typicode.com/users')
+.then(data => console.log(data))
+.catch(err => console.log(err));
