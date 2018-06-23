@@ -31,5 +31,32 @@ class UI{
             <h3 class="page-heading mb-3">Latest Repos</h3>
             <div id="repos"></div>
         `;
-      }
+    }
+
+    clearProfile(){
+        this.profile.innerHTML = '';
+    }
+
+    showAlert(message,className){
+        //clear alerts
+        this.clearAlert();
+        //create div
+        const div = document.createElement('div');
+        div.className = className;
+        div.appendChild(document.createTextNode(message));
+        const container = document.querySelector('.searchContainer');
+        const search = document.querySelector('.search');
+        container.insertBefore(div,search);
+        //clear from screen
+        setTimeout(() => {
+            this.clearAlert();
+        },3000);
+    }
+
+    clearAlert(){
+        const currentAlert = document.querySelector('.alert');
+        if(currentAlert){
+            currentAlert.remove();
+        }
+    }
 }
