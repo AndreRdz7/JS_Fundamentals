@@ -30,7 +30,20 @@ re = /Hel{2,}o/i;  // looks for att least two l
 //Parenthesis () - Grouping
 re = /^([0-9]x){3}$/; //looks for ex: 3x3x3x, 1x2x3x
 
+//Shorthand character classes
+re = /\w/;           // Word character - alphanumeric or _ (only first char)
+re = /\w+/;          // Word character - alphanumeric or _ (all chars)
+re = /\WS/;          // Non-word char
+re = /\d/;           // Match any digit (once)
+re = /\d+/;          // Match any digit (all)
+re = /\D/;           // Match any non-digit
+re = /\s/;           // Match whitespace
+re = /\S/;           // Match non-whitespace
+re = /Hell\b/i;      // Word boundary (exact word)
 
+// Assertions
+re = /x(?=y)/;        // Match x only if followed by y    ex: sefxy match
+re = /x(?!y)/;        // Match x only if not followed by y    ex: sefx match
 
 
 //string to match
