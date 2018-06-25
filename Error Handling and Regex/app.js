@@ -1,39 +1,30 @@
-//Evaluation functions
 let re;
-
-//i = case insensitive
-//g = global search, multiple instances
+//literal characters
+re = /hello/;
 re = /hello/i;
 
-console.log('regex: ' + re);
-console.log('regex text: ' + re.source);
+//metacharacter symbols
+re = /^h/i;     //must start with
+re = /world$/i; //must end with
+re = /^hello$/i;
+re = /^h.llo$/i; // ignores whats in between (dot place)
+re = /h*d/i;     // ignores whats in between (all)
+re = /gre?a?y/;  // optional characters (any of them or none at all)
+re = /gray\?/;   // scape characters
 
-//exec() - return result in an array or null
-//looks for the word hello, it can be inside another
-//word or at the end, and it will return the array
-//and the index of where it starts
-const result = re.exec('hello world');
-console.log('Exec: ' + result);
-//first value of the array
-console.log('Exec first value: ' + result[0]);
-console.log('Exec index: ' + result.index); 
+//string to match
+const str = 'Hello World';
 
-//test() - return true of false
-const res = re.test('Hello');
-console.log('Test: ' + res);
+//log results
+const result = re.exec(str);
+console.log(result);
 
-//match() - return array or null
-//returns what it matches
-const str = 'Hello There';
-const resu = str.match(re);
-console.log('match: ' + resu);
+function reTest(re, str){
+    if(re.test(str)){
+        console.log(`${str} matched ${re.source}`);
+    } else {
+        console.log(`${str} does NOT match ${re.source}`);
+    }
+}
 
-//search() - return indexof first match, else -1
-const st = 'Hello There';
-const resul = str.search(re);
-console.log('Search: ' + resul);
-
-//replace() - return new string with some or all matvhes
-const string = 'Hello There';
-const newString = str.replace(re, 'Hi');
-console.log(newString);
+reTest(re,str);
