@@ -1,50 +1,55 @@
-// destructuring assignment
+// ES6 Map = key value pairs, any type
+const map1 = new Map();
 
-let a,b ;
-[a,b] = [100, 200];
-//rest pattern
-[a, b, c, ...rest] = [100,200,300,400,500];
+//set keys
+const key1 = 'some string',
+      key2 = {};
+      key3 = function(){};
 
-console.log(rest);
+//set map values by key
+map1.set(key1,'Value of key1');
+map1.set(key2,'Value of key2');
+map1.set(key3,'Value of key3');
 
-//with objs
-({a,b} = {a: 100, b: 200, c: 300, d: 400, e: 500});
-console.log(a,b);
-// rest pattern
-({a,b,...rest} = {a: 100, b: 200, c: 300, d: 400, e: 500});
-console.log(rest);
+//get values by keys
+console.log(map1.get(key1));
+console.log(map1.get(key2));
+console.log(map1.get(key3));
 
-// Array destructuring
-const people = ['John','Beth','Mike'];
-const [person1,person2,person3] = people;
+//count values
+console.log(map1.size);
 
-//parse array returned from function
-function getPeople(){
-    return ['John','Beth','Mike'];
+//iterating
+
+//looping using for of to get keys and values
+for(let [key,value] of map1){
+    console.log(`${key} = ${value}`);
 }
 
-let p1,p2,p3;
-[p1,p2,p3] = getPeople();
-console.log(p1,p2,p3)
-
-//obj destructuring
-const person = {
-    name: 'John Doe',
-    age: 32, 
-    city: 'Miami',
-    gender: 'Male',
-    sayHello: function(){
-        console.log('Hello');
-    }
+//iterate keys only
+for(let key of map1.keys()){
+    console.log(key);
 }
-/*
-//old ES5
-const name = person.name,
-      age = person.age,
-      city = person.city,
-      gender = person.gender;
-*/
-// new ES6
-const {name,age,city,gender,sayHello} = person;
-console.log(name,age,city,gender);
-sayHello();
+
+//iterate values only
+for(let value of map1.values()){
+    console.log(value);
+}
+
+//loop foreach
+map1.forEach(function(value,key) {
+    console.log(`${key} = ${value}`);
+});
+
+//convert to arrays
+//create array of key value pais
+const keyValArr = Array.from(map1);
+console.log(keyValArr);
+
+//create array of values
+const valArr = Array.from(map1.values());
+console.log(valArr);
+
+//create array of keys
+const keyArr = Array.from(map1.keys());
+console.log(keyArr);
