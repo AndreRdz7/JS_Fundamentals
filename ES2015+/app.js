@@ -1,55 +1,44 @@
-// ES6 Map = key value pairs, any type
-const map1 = new Map();
+//sets - unique values, any type
+const set1 = new Set();
 
-//set keys
-const key1 = 'some string',
-      key2 = {};
-      key3 = function(){};
+//add values to set
+set1.add(100);
+set1.add('A string');
+set1.add({name: 'John'});
+set1.add(true);
+console.log(set1);
+const set2 = new Set([1,true,'str']);
+console.log(set2);
 
-//set map values by key
-map1.set(key1,'Value of key1');
-map1.set(key2,'Value of key2');
-map1.set(key3,'Value of key3');
+//get size
+console.log('size: ' + set1.size);
 
-//get values by keys
-console.log(map1.get(key1));
-console.log(map1.get(key2));
-console.log(map1.get(key3));
+//check for values
+console.log(set1.has(100));
+console.log(set1.has(50 + 50));
+//dont recognize objs like(because its a reference value):
+console.log(set1.has({name: 'John'}));
 
-//count values
-console.log(map1.size);
+//proof, pointing to different location in memory, not a primitive type
+console.log({name: 'John'} === {name: 'John'});
 
-//iterating
+//delete form set
+set1.delete(100);
+console.log('after deleting');
+console.log(set1);
 
-//looping using for of to get keys and values
-for(let [key,value] of map1){
-    console.log(`${key} = ${value}`);
+//iterate
+console.log('iterations');
+//for...of
+for(let item of set1){
+    console.log(item);
 }
 
-//iterate keys only
-for(let key of map1.keys()){
-    console.log(key);
-}
-
-//iterate values only
-for(let value of map1.values()){
+set1.forEach((value) => {
     console.log(value);
-}
-
-//loop foreach
-map1.forEach(function(value,key) {
-    console.log(`${key} = ${value}`);
 });
 
-//convert to arrays
-//create array of key value pais
-const keyValArr = Array.from(map1);
-console.log(keyValArr);
+//convert to array
 
-//create array of values
-const valArr = Array.from(map1.values());
-console.log(valArr);
-
-//create array of keys
-const keyArr = Array.from(map1.keys());
-console.log(keyArr);
+const setArr = Array.from(set1);
+console.log(setArr);
