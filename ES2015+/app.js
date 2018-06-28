@@ -1,34 +1,50 @@
-// create a symbol
-// they can NEVER be the same
+// destructuring assignment
 
-/*
-const sym1 = Symbol();
-const sym2 = Symbol('sym2');
+let a,b ;
+[a,b] = [100, 200];
+//rest pattern
+[a, b, c, ...rest] = [100,200,300,400,500];
 
-console.log(Symbol('123') === Symbol('123'));
-console.log(`Hello ${String(sym1)}`);
-*/
+console.log(rest);
 
-// unique object keys
-const KEY1 = Symbol();
-const KEY2 = Symbol('sym2');
+//with objs
+({a,b} = {a: 100, b: 200, c: 300, d: 400, e: 500});
+console.log(a,b);
+// rest pattern
+({a,b,...rest} = {a: 100, b: 200, c: 300, d: 400, e: 500});
+console.log(rest);
 
-const myObj = {};
+// Array destructuring
+const people = ['John','Beth','Mike'];
+const [person1,person2,person3] = people;
 
-myObj[KEY1] = 'Prop1';
-myObj[KEY2] = 'Prop2';
-myObj.key3 = 'Prop3';
-myObj.key4 = 'Prop4';
-
-/*
-console.log(myObj[KEY1]);
-console.log(myObj[KEY2]);
-*/
-
-//symbols are not enumerable in for...in
-for(let i in myObj){
-    console.log(`${i}: ${myObj[i]}`);
+//parse array returned from function
+function getPeople(){
+    return ['John','Beth','Mike'];
 }
 
-//Symbols are ignore in JSON.stringify
-console.log(JSON.stringify({[Symbol('sym')]: 'prop'}));
+let p1,p2,p3;
+[p1,p2,p3] = getPeople();
+console.log(p1,p2,p3)
+
+//obj destructuring
+const person = {
+    name: 'John Doe',
+    age: 32, 
+    city: 'Miami',
+    gender: 'Male',
+    sayHello: function(){
+        console.log('Hello');
+    }
+}
+/*
+//old ES5
+const name = person.name,
+      age = person.age,
+      city = person.city,
+      gender = person.gender;
+*/
+// new ES6
+const {name,age,city,gender,sayHello} = person;
+console.log(name,age,city,gender);
+sayHello();
