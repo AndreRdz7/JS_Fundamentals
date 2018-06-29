@@ -1,59 +1,30 @@
-//basic structure
-/*
-(function(){
-    //declare private variabless
-    
-    return {
-        //declare public variables
-    }
-})();
-*/
+// Singleton pattern
+// only return one instance at a time
 
-// Standard Module Pattern
-const UICtrl = (function() {
-    let _text = 'Hello World';
-    const changeText = function(){
-        const element = document.querySelector('h1');
-        element.textContent = _text;
+// log in users, global point of access
+
+const Singleton = (function(){
+    let instance;
+
+    function createInstance(){
+        const object = new Object({name: 'Andre'});
+        return object;
     }
 
     return {
-        callChangeText: function(){
-            changeText();
-            console.log(_text);
+        getInstance: function(){
+            if(!instance){
+                instance = createInstance();
+            }
+            return instance;
         }
     }
-
 })();
 
-// we cannot call changeText cuz its private, only callChangeText
-// similar like private and public funcitions
-UICtrl.callChangeText();
-// we cannot access variables outside the return, we get undefined
-console.log(UICtrl.text);
-
-
-// Revealing Module Pattern
-// we map object literals
-
-const ItemCtrl = (function(){
-    let _data = [];
-    function add(item){
-        _data.push(item);
-        console.log('item added');
-    }
-
-    function get(id){
-        return _data.find(item => {
-            return item.id === id;
-        });
-    }
-
-    return{
-        add: add,
-        get: get
-    }
-})();
-
-ItemCtrl.add({id: 1, name: 'John'});
-console.log(ItemCtrl.get(1));
+// can only be instanced once and only once
+const instanceA = Singleton.getInstance();
+console.log(instanceA);
+// proof
+const instanceB = Singleton.getInstance();
+console.log(instanceA === instanceB);
+// its the very same instance :)
