@@ -1,30 +1,48 @@
-// Singleton pattern
-// only return one instance at a time
+// different types, same characteristics
+// factory pattern
 
-// log in users, global point of access
+function MemberFactory(){
+    this.createMember = function(name,type){
+        let member;
 
-const Singleton = (function(){
-    let instance;
-
-    function createInstance(){
-        const object = new Object({name: 'Andre'});
-        return object;
-    }
-
-    return {
-        getInstance: function(){
-            if(!instance){
-                instance = createInstance();
-            }
-            return instance;
+        if(type === 'simple'){
+            member = new SimpleMembership(name);
+        } else if(type === 'standard'){
+            member = new StandardMembership(name);
+        } else if(type === 'super') {
+            member = new SuperMembership(name);
         }
-    }
-})();
 
-// can only be instanced once and only once
-const instanceA = Singleton.getInstance();
-console.log(instanceA);
-// proof
-const instanceB = Singleton.getInstance();
-console.log(instanceA === instanceB);
-// its the very same instance :)
+        member.type = type;
+
+        member.define = function(){
+            console.log(`${this.name} (${this.type}): ${this.cost}}`);
+        }
+
+        return member;
+    }
+}
+
+const SimpleMembership = function(name){
+    this.name = name;
+    this.cost = '$5';
+}
+
+const StandardMembership = function(name){
+    this.name = name;
+    this.cost = '$15';
+}
+
+const SuperMembership = function(name){
+    this.name = name;
+    this.cost = '$25';
+}
+
+const members = [];
+const factory = new MemberFactory();
+
+members.push(factory.createMember('John','simple'));
+
+members.forEach(function(member){
+    member.define();
+})
