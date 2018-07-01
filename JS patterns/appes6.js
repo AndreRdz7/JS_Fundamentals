@@ -1,15 +1,16 @@
 // observer
 
-function EventObserver(){
-    this.observers = [];
-}
+class EventObserver{
+    constructor(){
+        this.observers = [];
+    }
 
-EventObserver.prototype = {
-    susbcribe: function(fn){
+    susbcribe(fn){
         this.observers.push(fn);
         console.log(`You are now subscribed to ${fn.name}`);
-    },
-    unsubscribe: function(fn){
+    }
+
+    unsubscribe(fn){
         //filter out from the list whatever matches the callback on the list. The filter returns a new list and reassigns the list of observers
         this.observers = this.observers.filter(function(item){
             if(item !== fn){
@@ -17,8 +18,9 @@ EventObserver.prototype = {
             }
         });
         console.log(`You are unsubscribed from ${fn.name}`);
-    },
-    fire: function(){
+    }
+
+    fire(){
         this.observers.forEach(function(item){
             item.call();
         });
