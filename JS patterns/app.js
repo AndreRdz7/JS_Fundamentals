@@ -1,57 +1,53 @@
-// observer
+//mediator project
 
-function EventObserver(){
-    this.observers = [];
+const User = function(name){
+    this.name = name;
+    this.chatroom = null;
 }
 
-EventObserver.prototype = {
-    susbcribe: function(fn){
-        this.observers.push(fn);
-        console.log(`You are now subscribed to ${fn.name}`);
+User.prototype = {
+    send: function(message,to){
+        this.chatroom.send(message,this,to);
     },
-    unsubscribe: function(fn){
-        //filter out from the list whatever matches the callback on the list. The filter returns a new list and reassigns the list of observers
-        this.observers = this.observers.filter(function(item){
-            if(item !== fn){
-                return item;
-            }
-        });
-        console.log(`You are unsubscribed from ${fn.name}`);
-    },
-    fire: function(){
-        this.observers.forEach(function(item){
-            item.call();
-        });
+    receive: function(message,from){
+        console.log(`${from.name} to ${this.name}: ${message}`);
     }
 }
 
-const click = new EventObserver();
+const Chatroom = function(){
+    let users = {}; //list of users
 
-document.querySelector('.sub-ms').addEventListener('click',function(){
-    click.susbcribe(getCurMilliseconds);
-});
-
-document.querySelector('.unsub-ms').addEventListener('click',function(){
-    click.unsusbcribe(getCurMilliseconds);
-});
-
-document.querySelector('.sub-s').addEventListener('click',function(){
-    click.susbcribe(getCurSeconds);
-});
-
-document.querySelector('.unsub-s').addEventListener('click',function(){
-    click.unsusbcribe(getCurSeconds);
-});
-
-document.querySelector('.fire').addEventListener('click',function(){
-    click.fire();
-});
-
-//click handler
-const getCurMilliseconds = function(){
-    console.log(`Current Milliseconds: ${new Date().getMilliseconds()}`);
+    return {
+        register: function(user){
+            users[user.name] = user;
+            user.chatroom = this;
+        },
+        send: function(message,from,to){
+            if(to){
+                //single user message
+                to.receive(message,from);
+            } else {
+                //broadcast
+                for(key in users){
+                    if(users[key] !== from){
+                        users[key].receive(message,from);
+                    }
+                }
+            }
+        }
+    }
 }
 
-const getCurSeconds = function(){
-    console.log(`Current Seconds: ${new Date().getSeconds()}`);
-}
+const brad = new User ('Brad');
+const jeff = new User ('Jeff');
+const sara = new User ('Sara');
+
+const chatroom = new Chatroom();
+
+chatroom.register(brad);
+chatroom.register(jeff);
+chatroom.register(sara);
+
+brad.send('Hello Jeff',jeff);
+sara.send('Hello Brad, you are the best dev ever',brad);
+jeff.send('Hi everyone');
