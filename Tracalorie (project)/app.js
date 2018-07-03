@@ -13,6 +13,7 @@ const ItemCtrl = (function(){
     // data structure / state
     const data = {
         items: [
+            /*
             {
                 id: 0,
                 name: 'Steak',
@@ -28,6 +29,7 @@ const ItemCtrl = (function(){
                 name: 'Cookie',
                 calories: 200
             }
+            */
         ],
         currentItem: null,
         totalCalories: 0
@@ -93,6 +95,30 @@ const UICtrl = (function(){
                 calories: document.querySelector(UISelectors.itemCaloriesInput).value
             }
         },
+        addListItem: function(item){
+            // show the list
+            document.querySelector(UISelectors.itemList).style.display = 'block'; 
+            // create li element
+            const li = document.createElement('li');
+            // add class
+            li.className = 'collection-item';
+            // add id
+            li.id = `item-${item.id}`;
+            // add html
+            li.innerHTML = `<strong>${item.name}: </strong> <em>${item.calories} Calories</em>
+            <a href="#" class="secondary-content">
+            <i class="edit-item fa fa-pencil"></i>
+            </a>`;
+            // insert item
+            document.querySelector(UISelectors.itemList).insertAdjacentElement('beforeend',li);
+        },
+        clearInput: function(){
+            document.querySelector(UISelectors.itemNameInput).value = '';
+            document.querySelector(UISelectors.itemCaloriesInput).value = '';
+        },
+        hideList: function(){
+            document.querySelector(UISelectors.itemList).style.display = 'none';
+        },
         getSelectors: function(){
             return UISelectors;
         }
@@ -116,6 +142,11 @@ const App = (function(ItemCtrl,UICtrl ){
         if(input.name !== '' && input.calories !== ''){
             // add item 
             const newItem = ItemCtrl.addItem(input.name, input.calories);
+            // add item to uilist
+            UICtrl.addListItem(newItem);
+
+            // clear fields
+            UICtrl.clearInput();
         }
         e.preventDefault();
     }
@@ -125,10 +156,15 @@ const App = (function(ItemCtrl,UICtrl ){
         init: function(){
             // fetch items from data structure
             const items = ItemCtrl.getItems();
-            // populate list with items
-            UICtrl.populateItemList(items);
-            // load event listeners
-            loadEventListeners();
+            // check if any items
+            if(items.length === 0){
+                UICtrl.hideList();
+            } else {
+                 // populate list with items
+                UICtrl.populateItemList(items);
+                // load event listeners
+                loadEventListeners();
+            }
         }
     }
 })(ItemCtrl,UICtrl);
