@@ -59,6 +59,17 @@ const ItemCtrl = (function(){
             return newItem; 
 
         },
+        getTotalCalories: function(){
+            let total = 0;
+            // add calories for every item
+            data.items.forEach(function(item){
+                total += item.calories;
+            });
+            // set total calories in data structure
+            data.totalCalories = total;
+            // return total
+            return data.totalCalories;
+        },
         logData: function(){
             return data;
         }
@@ -71,7 +82,8 @@ const UICtrl = (function(){
         itemList: '#item-list',
         addBtn: '.add-btn',
         itemNameInput: '#item-name',
-        itemCaloriesInput: '#item-calories'
+        itemCaloriesInput: '#item-calories',
+        totalCalories: '.total-calories'
     }
 
     return{
@@ -119,6 +131,9 @@ const UICtrl = (function(){
         hideList: function(){
             document.querySelector(UISelectors.itemList).style.display = 'none';
         },
+        showTotalCalories: function(totalCalories){
+            document.querySelector(UISelectors.totalCalories).textContent = totalCalories;
+        },
         getSelectors: function(){
             return UISelectors;
         }
@@ -144,8 +159,11 @@ const App = (function(ItemCtrl,UICtrl ){
             const newItem = ItemCtrl.addItem(input.name, input.calories);
             // add item to uilist
             UICtrl.addListItem(newItem);
-
-            // clear fields
+            // get total calories
+            const totalCalories = ItemCtrl.getTotalCalories();
+            // show it in the UI
+            UICtrl.showTotalCalories(totalCalories);
+            // clear fieldss
             UICtrl.clearInput();
         }
         e.preventDefault();
@@ -162,9 +180,13 @@ const App = (function(ItemCtrl,UICtrl ){
             } else {
                  // populate list with items
                 UICtrl.populateItemList(items);
-                // load event listeners
-                loadEventListeners();
             }
+            // get total calories
+            const totalCalories = ItemCtrl.getTotalCalories();
+            // show it in the UI
+            UICtrl.showTotalCalories(totalCalories);
+            // load event listeners
+            loadEventListeners();
         }
     }
 })(ItemCtrl,UICtrl);
