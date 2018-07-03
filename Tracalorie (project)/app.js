@@ -85,7 +85,7 @@ const ItemCtrl = (function(){
         },
         deleteItem: function(id){
             // get ids
-            ids = data.items.map(function(item){
+            const ids = data.items.map(function(item){
                 return item.id;
             });
             //get index
@@ -127,8 +127,8 @@ const UICtrl = (function(){
         addBtn: '.add-btn',
         updateBtn: '.update-btn',
         deleteBtn: '.delete-btn',
-        backBtn: 'back-btn',
-        clearBtn: 'clear-btn',
+        backBtn: '.back-btn',
+        clearBtn: '.clear-btn',
         itemNameInput: '#item-name',
         itemCaloriesInput: '#item-calories',
         totalCalories: '.total-calories'
@@ -262,7 +262,7 @@ const App = (function(ItemCtrl,UICtrl ){
         // update item event
         document.querySelector(UISelectors.updateBtn).addEventListener('click',itemUpdateSubmit);
         // back button event
-        document.querySelector(UISelectors.backBtn).addEventListener('click',UICtrl.clearEditState());
+        document.querySelector(UISelectors.backBtn).addEventListener('click',UICtrl.clearEditState);
         // delete item event
         document.querySelector(UISelectors.deleteBtn).addEventListener('click',ItemDeleteSubmit);
         // clear items event
